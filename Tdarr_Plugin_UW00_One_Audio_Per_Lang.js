@@ -154,7 +154,7 @@ const plugin = (file, librarySettings, inputs, otherArguments) => {
     };
 
     // Group each audio track by language and change audio index to audio position
-    for (let i = 0; i < audioStreams.length; i += 1) {
+    for (let i = 0; i < audioStreams.length; i++) {
         let groupKey = "und";
         if (audioStreams[i]?.tags?.language !== undefined) {
             groupKey = audioStreams[i].tags.language;
