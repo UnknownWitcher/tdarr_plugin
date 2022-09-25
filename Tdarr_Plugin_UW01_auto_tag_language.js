@@ -176,7 +176,7 @@ const plugin = (file, librarySettings, inputs, otherArguments) => {
     }
 
     response.processFile = true;
-    response.preset = ffmpegArg;
+    response.preset = ffmpegArg + " -max_muxing_queue_size 9999";
     return response;
 }
 module.exports.details = details;
