@@ -8,7 +8,7 @@ const details = () => ({
     Author: "UnknownWitcher",
     Description: `Warning: tdarr does not detect chapters, this plugin includes it's own filter to break potential loops, because of this
                 the plugin needs to be first on your stack.`,
-    Version: '2.00',
+    Version: '1.20',
     Tags: 'pre-processing,ffmpeg,video only,configurable',
     Inputs: [{
         name: 'chapter_duration',
