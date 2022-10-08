@@ -115,7 +115,13 @@ const plugin = (file, librarySettings, inputs, otherArguments) => {
         }
     }
     let chapterFile = `${originFile.substr(0, originFile.lastIndexOf(".")) || originFile}.chapters`;
-
+    
+    // Skip if file already exists
+    if (fs.existsSync(chapterFile)) {
+        response.infoLog += `☒"${chapterFile}" Exists... SKIPPING. \n`;
+        return response;
+    }
+    
     // Convert seconds to milliseconds
     chapter_duration = chapter_duration * 1000;
     duration = duration * 1000;
