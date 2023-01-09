@@ -5,7 +5,7 @@ const details = () => ({
     Name: 'Migz-Clean subtitle streams',
     Type: 'Subtitle',
     Operation: 'Transcode',
-    Description: 'This plugin keeps only specified language tracks & can tag tracks with an unknown language. \n\n',
+    Description: 'This plugin keeps only specified language tracks & can tag tracks with an unknown language, MOD: remove anime signs and songs. \n\n',
     Version: '2.4',
     Tags: 'pre-processing,ffmpeg,subtitle only,configurable',
     Inputs: [{
