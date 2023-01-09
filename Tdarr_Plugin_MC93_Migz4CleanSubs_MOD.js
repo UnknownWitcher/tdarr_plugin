@@ -171,6 +171,7 @@ const plugin = (file, librarySettings, inputs, otherArguments) => {
                 if(removeSub === true) {
                     ffmpegCommandInsert += `-map -0:s:${subtitleIdx} `;
                     convert = true;
+                    removeSub = false;
                 }
             }
         } catch (err) {
