@@ -116,6 +116,7 @@ const plugin = (file, librarySettings, inputs, otherArguments) => {
     let ffmpegCommandInsert = '';
     let subtitleIdx = 0;
     let convert = false;
+    let removeSub = false;
     // Regex Pattern for Signs and Songs
     let regexPatern = /(s\s*&\s*s|signs(\s?(and|&|\/)\s?songs)?)/i
 
@@ -146,18 +147,30 @@ const plugin = (file, librarySettings, inputs, otherArguments) => {
             // AND if stream is subtitle
             // AND then checks for stream titles with the following "commentary, description, sdh".
             // Removing any streams that are applicable.
-            if (file.ffProbeData.streams[i].codec_type.toLowerCase() === 'subtitle'
-                && (inputs.commentary === true || inputs.signssongs === true) ) {
-            
-                if (file.ffProbeData.streams[i].tags.title.toLowerCase().includes('commentary')
-                || file.ffProbeData.streams[i].tags.title.toLowerCase().includes('description')
-                || file.ffProbeData.streams[i].tags.title.toLowerCase().includes('sdh')
-                || regexPatern.test(file.ffProbeData.streams[i].tags.title)) {
-            
-                    ffmpegCommandInsert += `-map -0:s:${subtitleIdx} `;
+            if (file.ffProbeData.streams[i].codec_type.toLowerCase() === 'subtitle') {
+                if (
+                    inputs.commentary === true 
+                    && (file.ffProbeData.streams[i].tags.title
+                        .toLowerCase().includes('commentary')
+                        || file.ffProbeData.streams[i].tags.title
+                        .toLowerCase().includes('description')
+                        || file.ffProbeData.streams[i].tags.title
+                        .toLowerCase().includes('sdh')
+                    )
+                ) {
+                    removeSub = true;
                     response.infoLog += `☒Subtitle stream 0:s:${subtitleIdx} detected as being descriptive, removing. \n`;
+                }
+                if(
+                    inputs.signssongs === true
+                    && regexPatern.test(file.ffProbeData.streams[i].tags.title)
+                ) {
+                    removeSub = true;
+                    response.infoLog += `☒Subtitle stream 0:s:${subtitleIdx} detected as being signs and songs, removing. \n`;
+                }
+                if(removeSub === true) {
+                    ffmpegCommandInsert += `-map -0:s:${subtitleIdx} `;
                     convert = true;
-            
                 }
             }
         } catch (err) {
