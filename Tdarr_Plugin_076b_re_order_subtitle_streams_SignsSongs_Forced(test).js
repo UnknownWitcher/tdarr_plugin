@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* eslint no-plusplus: ["error", { "allowForLoopAfterthoughts": true }] */
 const details = () => {
     return {
         id: "Tdarr_Plugin_076b_re_order_subtitle_streams_SignsSongs_Forced(test)",
@@ -56,10 +56,10 @@ const plugin = (file, librarySettings, inputs, otherArguments) => {
 
     const response = {
         processFile: false,
-        preset: ",",
+        preset: "",
         container: `.${file.container}`,
         handBrakeMode: false,
-        FFmpegMode: false,
+        FFmpegMode: true,
         reQueueAfter: false,
         infoLog: "",
     };
@@ -70,8 +70,8 @@ const plugin = (file, librarySettings, inputs, otherArguments) => {
     let regexPatern = /(s\s*&\s*s|signs(\s?(and|&|\/)\s?songs)?)/i;
 
     const ffmpegConfig = {
-        map: "-map 0:v? -map 0:a?",
-        cmd: "",
+        map: ", -map 0:v? -map 0:a?",
+        cmd: " -disposition:s 0",
         temp: [],
     };
 
@@ -120,48 +120,46 @@ const plugin = (file, librarySettings, inputs, otherArguments) => {
         let stream = groupByLang[inputs.preferred_language][i];
         let stream_title = stream.tags?.title || "";
 
-        if(inputs.signssongs === true && regexPatern.test(stream_title) ) {
+        if (inputs.signssongs === true && regexPatern.test(stream_title)) {
             response.infoLog += `☒ Signs and Songs ${inputs.preferred_language}; `
             if (stream.index === 0 && stream.disposition.forced === 1) {
                 response.infoLog += `is already track 1 and forced. \n`;
             } else {
-                response.infoLog += `track ${stream.index+1} => ${pos+1}`;
-                if(pos === 0){
+                response.infoLog += `track ${stream.index + 1} => ${pos + 1}`;
+                if (pos === 0) {
                     response.infoLog += ", marking as default+forced."
+                    ffmpegConfig.cmd += ` -disposition:s:0 +default+forced`
                     convert = true;
                 }
                 response.infoLog += " \n"
             }
-            ffmpegConfig.map += ` -map 0:s:${pos}`;
-            ffmpegConfig.cmd += ` -disposition:s:${pos} `
-            ffmpegConfig.cmd += pos === 0 ? "+default+forced" : "0";
+            ffmpegConfig.map += ` -map 0:s:${stream.index}`;
             pos++;
             continue;
         }
-
         // Save subtitle track for later
         ffmpegConfig.temp.push(stream);
     }
 
     // This will sort the rest of our preferred language
     for (let i = 0; i < ffmpegConfig.temp.length; i++) {
+
         let stream = ffmpegConfig.temp[i];
+
         response.infoLog += `☒ ${inputs.preferred_language}; `;
-        response.infoLog += `track ${stream.index+1} => ${pos+1}`;
-        if(pos === 0){
+        response.infoLog += `track ${stream.index + 1} => ${pos + 1}`;
+        if (pos === 0) {
             if (stream.disposition.default !== 1) {
                 response.infoLog += ", marking as default.";
+                ffmpegConfig.cmd += ` -disposition:s:0 default`
                 convert = true;
             }
         }
-        if(pos !== 0 && pos !== stream.index) {
+        ffmpegConfig.map += ` -map 0:s:${stream.index}`;
+        if (pos !== 0 && pos !== stream.index) {
             convert = true;
         }
         response.infoLog += " \n"
-
-        ffmpegConfig.map += ` -map 0:s:${pos}`;
-        ffmpegConfig.cmd += ` -disposition:s:${pos} `;
-        ffmpegConfig.cmd += pos === 0 ? "default" : "0";
         pos++;
     }
 
@@ -178,9 +176,8 @@ const plugin = (file, librarySettings, inputs, otherArguments) => {
         let stream = groupByLang[key];
         for (let i = 0; i < stream.length; i++) {
             response.infoLog += `☒ ${key}; `
-            response.infoLog += `track ${stream[i].index+1} => ${pos+1} \n`;
-            ffmpegConfig.map += ` -map 0:s:${pos}`;
-            ffmpegConfig.cmd += ` -disposition:s:${pos} 0`;
+            response.infoLog += `track ${stream[i].index + 1} => ${pos + 1} \n`;
+            ffmpegConfig.map += ` -map 0:s:${stream[i].index}`;
             pos++;
         }
     }
