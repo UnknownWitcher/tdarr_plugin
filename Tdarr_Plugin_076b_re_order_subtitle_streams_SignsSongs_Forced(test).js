@@ -106,12 +106,16 @@ const plugin = (file, librarySettings, inputs, otherArguments) => {
             streams = groupByLang[inputs.preferred_language];
 
             for (let i = 0; i < streams.length; i++) {
+                if (inputs.signssongs === false) {
+                    break;
+                }
+
                 let subtitle = streams[i];
                 let title = subtitle.tags?.title || "";
 
-                if (inputs.signssongs === true && signsSongs.test(title)) {
-
+                if (signsSongs.test(title)) {
                     response.infoLog += `☒ Signs and Songs ${inputs.preferred_language}; `
+
                     if (subtitle.index === 0 && subtitle.disposition.forced === 1) {
                         response.infoLog += `is already track 1 and forced. \n`;
                     } else {
