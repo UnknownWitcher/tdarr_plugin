@@ -1,7 +1,7 @@
 /* eslint no-plusplus: ["error", { "allowForLoopAfterthoughts": true }] */
 const details = () => {
     return {
-        id: "Tdarr_Plugin_076b_re_order_subtitle_streams_SignsSongs_Forced(test)",
+        id: "Tdarr_Plugin_076b_re_order_subtitle_streams_SignsSongs_Forced_test",
         Stage: "Pre-processing",
         Name: "Re-order subtitle streams",
         Type: "Subtitle",
@@ -64,10 +64,7 @@ const plugin = (file, librarySettings, inputs, otherArguments) => {
         infoLog: "",
     };
 
-    // Set up required variables.
-
-    // Regex Pattern for Signs and Songs
-    let regexPatern = /(s\s*&\s*s|signs(\s?(and|&|\/)\s?songs)?)/i;
+    let signsSongs = /(s\s*&\s*s|signs(\s?(and|&|\/)\s?songs)?)/i;
 
     const ffmpegConfig = {
         map: ", -map 0:v? -map 0:a?",
@@ -78,115 +75,118 @@ const plugin = (file, librarySettings, inputs, otherArguments) => {
     let groupByLang = {};
     let convert = false;
 
-    // Get subtitle streams
-    const subtitleStream = file.ffProbeData.streams.filter(
+    const getStreams = file.ffProbeData.streams.filter(
         (row) => row.codec_type === "subtitle"
     );
 
-    // Does this file have subtitles?
-    if (subtitleStream.length === 0) {
-        response.infoLog += "☒ No subtitle tracks found! \n";
-        return response;
-    }
-    // Nothing to do if only one subtitle track exists
-    if (subtitleStream.length === 1) {
-        response.infoLog += "☒ Has one subtitle track! \n";
+    if (getStreams.length <= 1) {
+        response.infoLog = "☑ No need to process file. \n";
         return response;
     }
 
-    // Group each subtitle stream by language
-    for (let i = 0; i < subtitleStream.length; i++) {
-        let stream_lang = subtitleStream[i].tags?.language || "und";
-
-        let groupKey = stream_lang;
-
-        groupByLang[groupKey] = groupByLang[groupKey] || [];
-        groupByLang[groupKey].push(subtitleStream[i]);
-        // Set stream index position
-        groupByLang[groupKey][groupByLang[groupKey].length - 1].index = i;
+    for (let i = 0; i < getStreams.length; i++) {
+        let subtitle = getStreams[i];
+        let language = subtitle.tags?.language || "und";
+        groupByLang[language] = groupByLang[language] || [];
+        groupByLang[language].push(subtitle);
+        groupByLang[language][groupByLang[language].length - 1].index = i;
     }
 
-    // Does our preferred language exist?
-    if (inputs.preferred_language in groupByLang) {
-        response.infoLog += "☑ Preferred language found! \n";
-    } else {
-        response.infoLog += "☒ Preferred language not found! \n";
+    if (inputs.preferred_language in groupByLang === false) {
+        response.infoLog = "Preferred language not found, No need to process file. \n";
         return response;
     }
 
-    // Find signs and song tracks
-    let pos = 0;
-    for (let i = 0; i < groupByLang[inputs.preferred_language].length; i++) {
-        let stream = groupByLang[inputs.preferred_language][i];
-        let stream_title = stream.tags?.title || "";
+    let preferredLanguage = false;
+    let subtitlePosition = 0;
+    for (let lang in groupByLang) {
+        let streams;
+        if (preferredLanguage === false) {
+            let mainIndex;
+            streams = groupByLang[inputs.preferred_language];
 
-        if (inputs.signssongs === true && regexPatern.test(stream_title)) {
-            response.infoLog += `☒ Signs and Songs ${inputs.preferred_language}; `
-            if (stream.index === 0 && stream.disposition.forced === 1) {
-                response.infoLog += `is already track 1 and forced. \n`;
-            } else {
-                response.infoLog += `track ${stream.index + 1} => ${pos + 1}`;
-                if (pos === 0) {
-                    response.infoLog += ", marking as default+forced."
-                    ffmpegConfig.cmd += ` -disposition:s:0 +default+forced`
-                    convert = true;
+            for (let i = 0; i < streams.length; i++) {
+                let subtitle = streams[i];
+                let title = subtitle.tags?.title || "";
+
+                if (inputs.signssongs === true && signsSongs.test(title)) {
+
+                    response.infoLog += `☒ Signs and Songs ${inputs.preferred_language}; `
+                    if (subtitle.index === 0 && subtitle.disposition.forced === 1) {
+                        response.infoLog += `is already track 1 and forced. \n`;
+                    } else {
+                        response.infoLog += `track ${subtitle.index + 1} => 1`;
+                        response.infoLog += ", marking as default+forced. \n";
+
+                        ffmpegConfig.cmd += ` -disposition:s:0 +default+forced`;
+
+                        convert = true;
+                    }
+                    mainIndex = subtitle.index;
+                    ffmpegConfig.map += ` -map 0:s:${subtitle.index}`;
+
+                    subtitlePosition++
+                    break;
                 }
+            }
+
+            for (let i = 0; i < streams.length; i++) {
+                let subtitle = streams[i];
+
+                if (mainIndex === subtitle.index) {
+                    continue;
+                }
+
+                response.infoLog += `☒ ${inputs.preferred_language}; `;
+                response.infoLog += `track ${subtitle.index + 1} => ${subtitlePosition + 1}`;
+
+                if (subtitlePosition === 0) {
+                    if (subtitle.disposition.default !== 1) {
+                        response.infoLog += ", marking as default.";
+                        ffmpegConfig.cmd += ` -disposition:s:0 default`
+                        convert = true;
+                    }
+                }
+                else {
+                    if (subtitlePosition !== subtitle.index) {
+                        convert = true;
+                    }
+                }
+
+                ffmpegConfig.map += ` -map 0:s:${subtitle.index}`;
+
                 response.infoLog += " \n"
+
+                subtitlePosition++
             }
-            ffmpegConfig.map += ` -map 0:s:${stream.index}`;
-            pos++;
-            continue;
+
+            preferredLanguage = true;
         }
-        // Save subtitle track for later
-        ffmpegConfig.temp.push(stream);
-    }
 
-    // This will sort the rest of our preferred language
-    for (let i = 0; i < ffmpegConfig.temp.length; i++) {
+        if (convert === false) {
+            response.infoLog = "☑ No need to process file. \n";
+            return response;
+        }
 
-        let stream = ffmpegConfig.temp[i];
+        if (lang !== inputs.preferred_language) {
+            streams = groupByLang[lang];
 
-        response.infoLog += `☒ ${inputs.preferred_language}; `;
-        response.infoLog += `track ${stream.index + 1} => ${pos + 1}`;
-        if (pos === 0) {
-            if (stream.disposition.default !== 1) {
-                response.infoLog += ", marking as default.";
-                ffmpegConfig.cmd += ` -disposition:s:0 default`
-                convert = true;
+            for (let i = 0; i < streams.length; i++) {
+                let subtitle = streams[i];
+                response.infoLog += `☒ ${lang}; `
+                response.infoLog += `track ${subtitle.index + 1} => ${subtitlePosition + 1} \n`;
+                ffmpegConfig.map += ` -map 0:s:${subtitle.index}`;
+                subtitlePosition++
             }
         }
-        ffmpegConfig.map += ` -map 0:s:${stream.index}`;
-        if (pos !== 0 && pos !== stream.index) {
-            convert = true;
-        }
-        response.infoLog += " \n"
-        pos++;
     }
 
-    if (convert === false) {
-        response.infoLog = "☑ Subtitles in expected order.";
-        return response;
+    if (convert === true) {
+        response.preset += ffmpegConfig.map;
+        response.preset += ` -map 0:d? -map 0:t? -c copy`;
+        response.preset += ffmpegConfig.cmd;
+        response.processFile = true;
     }
-
-    // Handle remaining languages
-    for (var key in groupByLang) {
-        if (key === inputs.preferred_language) {
-            continue;
-        }
-        let stream = groupByLang[key];
-        for (let i = 0; i < stream.length; i++) {
-            response.infoLog += `☒ ${key}; `
-            response.infoLog += `track ${stream[i].index + 1} => ${pos + 1} \n`;
-            ffmpegConfig.map += ` -map 0:s:${stream[i].index}`;
-            pos++;
-        }
-    }
-
-    response.preset += ffmpegConfig.map;
-    response.preset += ` -map 0:d? -map 0:t? -c copy`;
-    response.preset += ffmpegConfig.cmd;
-    response.processFile = true;
-
     return response
 };
 
