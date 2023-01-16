@@ -71,7 +71,7 @@ const plugin = (file, librarySettings, inputs, otherArguments) => {
 
     const ffmpegConfig = {
         map: ", -map 0:v? -map 0:a?",
-        cmd: " -disposition:s 0",
+        cmd: " -disposition:s -default-forced",
         temp: [],
     };
 
