@@ -364,7 +364,7 @@ function buildSubtitleConfiguration(inputs, file, logger) {
  * MKV container.
  */
 function buildVideoConfiguration(inputs, file, logger) {
-  var configuration = new Configurator(["-map 0", "-map -0:d", "-c:v copy"]);
+  var configuration = new Configurator(["-map 0", "-map -0:d"]);
 
   var tiered = {
     "480p": {
