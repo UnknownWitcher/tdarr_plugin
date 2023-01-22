@@ -1,134 +1,134 @@
 /* eslint-disable */
 
 const details = () => {
-  return {
-    id: "Tdarr_Plugin_DOOM_NO_FILTER_QSV_Tiered_MKV_CleanAll",
-    Stage: "Pre-processing",
-    Name: "DOOM NO FILTER Tiered H265 MKV, remove audio & subtitles [NVENC]",
-    Stage: "Pre-processing",
-    Type: "Video",
-    Operation: "Transcode",
-    Description:
-      "In a single pass ensures all files are in MKV containers and where possible encoded in h265 (Tiered bitrate based on resolution), removes audio and subtitles that are not in the configured language or marked as commentary.",
-    Version: "2.0",
-    Tags: "pre-processing,ffmpeg,nvenc h265",
-    Inputs: [
-      {
-        name: "target_bitrate_480p576p",
-        type: "string",
-        defaultValue: "1000000",
-        inputUI: {
-          type: "text"
-        },
-        tooltip: `Specify the target bitrate for 480p and 576p files, if current bitrate exceeds the target. Otherwise target_pct_reduction will be used.
-              \\nExample 1 Mbps:\\n
-              1000000`
-      },
-      {
-        name: "target_bitrate_720p",
-        type: "string",
-        defaultValue: "2000000",
-        inputUI: {
-          type: "text"
-        },
-        tooltip: `Specify the target bitrate for 720p files, if current bitrate exceeds the target. Otherwise target_pct_reduction will be used.
-              \\nExample 2 Mbps:\\n
-              2000000`
-      },
-      {
-        name: "target_bitrate_1080p",
-        type: "string",
-        defaultValue: "2500000",
-        inputUI: {
-          type: "text"
-        },
-        tooltip: `Specify the target bitrate for 1080p files, if current bitrate exceeds the target. Otherwise target_pct_reduction will be used.
-              \\nExample 2.5 Mbps:\\n
-              2500000`
-      },
-      {
-        name: "target_bitrate_4KUHD",
-        type: "string",
-        defaultValue: "14000000",
-        inputUI: {
-          type: "text"
-        },
-        tooltip: `Specify the target bitrate for 4KUHD files, if current bitrate exceeds the target. Otherwise target_pct_reduction will be used.
-              \\nExample 14 Mbps:\\n
-              14000000`
-      },
-      {
-        name: "target_pct_reduction",
-        type: "string",
-        defaultValue: ".50",
-        inputUI: {
-          type: "text"
-        },
-        tooltip: `Specify the target reduction of bitrate, if current bitrate is less than resolution targets.
-              \\nExample 50%:\\n
-              .50`
-      },
-      {
-        name: "audio_language",
-        type: "string",
-        defaultValue: "eng",
-        inputUI: {
-          type: "text"
-        },
-        tooltip: `Specify language tag/s here for the audio tracks you'd like to keep, recommended to keep "und" as this stands for undertermined, some files may not have the language specified. Must follow ISO-639-2 3 letter format. https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes
-              \\nExample:\\n
-              eng
-
-              \\nExample:\\n
-              eng,und
-
-              \\nExample:\\n
-              eng,und,jap`
-      },
-      {
-        name: "audio_commentary",
-        type: "string",
-        defaultValue: "false",
-        inputUI: {
-          type: "text"
-        },
-        tooltip: `Specify if audio tracks that contain commentary/description should be removed.
-              \\nExample:\\n
-              true
-
-              \\nExample:\\n
-              false`
-      },
-      {
-        name: "subtitle_language",
-        type: "string",
-        defaultValue: "",
-        inputUI: {
-          type: "text"
-        },
-        tooltip: `Specify language tag/s here for the subtitle tracks you'd like to keep. Must follow ISO-639-2 3 letter format. https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes
-              \\nExample:\\n
-              eng
-
-              \\nExample:\\n
-              eng,jap`
-      },
-      {
-        name: "subtitle_commentary",
-        type: "string",
-        defaultValue: "false",
-        inputUI: {
-          type: "text"
-        },
-        tooltip: `Specify if subtitle tracks that contain commentary/description should be removed.
-              \\nExample:\\n
-              true
-
-              \\nExample:\\n
-              false`
-      }
-    ]
-  };
+    return {
+        id: "Tdarr_Plugin_DOOM_NO_FILTER_QSV_Tiered_MKV_CleanAll",
+        Stage: "Pre-processing",
+        Name: "DOOM NO FILTER Tiered H265 MKV, remove audio & subtitles [NVENC]",
+        Stage: "Pre-processing",
+        Type: "Video",
+        Operation: "Transcode",
+        Description:
+            "In a single pass ensures all files are in MKV containers and where possible encoded in h265 (Tiered bitrate based on resolution), removes audio and subtitles that are not in the configured language or marked as commentary.",
+        Version: "2.0",
+        Tags: "pre-processing,ffmpeg,nvenc h265",
+        Inputs: [
+            {
+                name: "target_bitrate_480p576p",
+                type: "string",
+                defaultValue: "1000000",
+                inputUI: {
+                    type: "text"
+                },
+                tooltip: `Specify the target bitrate for 480p and 576p files, if current bitrate exceeds the target. Otherwise target_pct_reduction will be used.
+                \\nExample 1 Mbps:\\n
+                1000000`
+            },
+            {
+                name: "target_bitrate_720p",
+                type: "string",
+                defaultValue: "2000000",
+                inputUI: {
+                    type: "text"
+                },
+                tooltip: `Specify the target bitrate for 720p files, if current bitrate exceeds the target. Otherwise target_pct_reduction will be used.
+                \\nExample 2 Mbps:\\n
+                2000000`
+            },
+            {
+                name: "target_bitrate_1080p",
+                type: "string",
+                defaultValue: "2500000",
+                inputUI: {
+                    type: "text"
+                },
+                tooltip: `Specify the target bitrate for 1080p files, if current bitrate exceeds the target. Otherwise target_pct_reduction will be used.
+                \\nExample 2.5 Mbps:\\n
+                2500000`
+            },
+            {
+                name: "target_bitrate_4KUHD",
+                type: "string",
+                defaultValue: "14000000",
+                inputUI: {
+                    type: "text"
+                },
+                tooltip: `Specify the target bitrate for 4KUHD files, if current bitrate exceeds the target. Otherwise target_pct_reduction will be used.
+                \\nExample 14 Mbps:\\n
+                14000000`
+            },
+            {
+                name: "target_pct_reduction",
+                type: "string",
+                defaultValue: ".50",
+                inputUI: {
+                    type: "text"
+                },
+                tooltip: `Specify the target reduction of bitrate, if current bitrate is less than resolution targets.
+                \\nExample 50%:\\n
+                .50`
+            },
+            {
+                name: "audio_language",
+                type: "string",
+                defaultValue: "eng",
+                inputUI: {
+                    type: "text"
+                },
+                tooltip: `Specify language tag/s here for the audio tracks you'd like to keep, recommended to keep "und" as this stands for undertermined, some files may not have the language specified. Must follow ISO-639-2 3 letter format. https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes
+                \\nExample:\\n
+                eng
+  
+                \\nExample:\\n
+                eng,und
+  
+                \\nExample:\\n
+                eng,und,jap`
+            },
+            {
+                name: "audio_commentary",
+                type: "string",
+                defaultValue: "false",
+                inputUI: {
+                    type: "text"
+                },
+                tooltip: `Specify if audio tracks that contain commentary/description should be removed.
+                \\nExample:\\n
+                true
+  
+                \\nExample:\\n
+                false`
+            },
+            {
+                name: "subtitle_language",
+                type: "string",
+                defaultValue: "",
+                inputUI: {
+                    type: "text"
+                },
+                tooltip: `Specify language tag/s here for the subtitle tracks you'd like to keep. Must follow ISO-639-2 3 letter format. https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes
+                \\nExample:\\n
+                eng
+  
+                \\nExample:\\n
+                eng,jap`
+            },
+            {
+                name: "subtitle_commentary",
+                type: "string",
+                defaultValue: "false",
+                inputUI: {
+                    type: "text"
+                },
+                tooltip: `Specify if subtitle tracks that contain commentary/description should be removed.
+                \\nExample:\\n
+                true
+  
+                \\nExample:\\n
+                false`
+            }
+        ]
+    };
 };
 
 // #region Helper Classes/Modules
@@ -137,80 +137,80 @@ const details = () => {
  * Handles logging in a standardised way.
  */
 class Log {
-  constructor() {
-    this.entries = [];
-  }
+    constructor() {
+        this.entries = [];
+    }
 
-  /**
-   *
-   * @param {String} entry the log entry string
-   */
-  Add(entry) {
-    this.entries.push(entry);
-  }
+    /**
+     *
+     * @param {String} entry the log entry string
+     */
+    Add(entry) {
+        this.entries.push(entry);
+    }
 
-  /**
-   *
-   * @param {String} entry the log entry string
-   */
-  AddSuccess(entry) {
-    this.entries.push(`☑ ${entry}`);
-  }
+    /**
+     *
+     * @param {String} entry the log entry string
+     */
+    AddSuccess(entry) {
+        this.entries.push(`☑ ${entry}`);
+    }
 
-  /**
-   *
-   * @param {String} entry the log entry string
-   */
-  AddError(entry) {
-    this.entries.push(`☒ ${entry}`);
-  }
+    /**
+     *
+     * @param {String} entry the log entry string
+     */
+    AddError(entry) {
+        this.entries.push(`☒ ${entry}`);
+    }
 
-  /**
-   * Returns the log lines separated by new line delimiter.
-   */
-  GetLogData() {
-    return this.entries.join("\n");
-  }
+    /**
+     * Returns the log lines separated by new line delimiter.
+     */
+    GetLogData() {
+        return this.entries.join("\n");
+    }
 }
 
 /**
  * Handles the storage of FFmpeg configuration.
  */
 class Configurator {
-  constructor(defaultOutputSettings = null) {
-    this.shouldProcess = false;
-    this.outputSettings = defaultOutputSettings || [];
-    this.inputSettings = [];
-  }
+    constructor(defaultOutputSettings = null) {
+        this.shouldProcess = false;
+        this.outputSettings = defaultOutputSettings || [];
+        this.inputSettings = [];
+    }
 
-  AddInputSetting(configuration) {
-    this.inputSettings.push(configuration);
-  }
+    AddInputSetting(configuration) {
+        this.inputSettings.push(configuration);
+    }
 
-  AddOutputSetting(configuration) {
-    this.shouldProcess = true;
-    this.outputSettings.push(configuration);
-  }
+    AddOutputSetting(configuration) {
+        this.shouldProcess = true;
+        this.outputSettings.push(configuration);
+    }
 
-  ResetOutputSetting(configuration) {
-    this.shouldProcess = false;
-    this.outputSettings = configuration;
-  }
+    ResetOutputSetting(configuration) {
+        this.shouldProcess = false;
+        this.outputSettings = configuration;
+    }
 
-  RemoveOutputSetting(configuration) {
-    var index = this.outputSettings.indexOf(configuration);
+    RemoveOutputSetting(configuration) {
+        var index = this.outputSettings.indexOf(configuration);
 
-    if (index === -1) return;
-    this.outputSettings.splice(index, 1);
-  }
+        if (index === -1) return;
+        this.outputSettings.splice(index, 1);
+    }
 
-  GetOutputSettings() {
-    return this.outputSettings.join(" ");
-  }
+    GetOutputSettings() {
+        return this.outputSettings.join(" ");
+    }
 
-  GetInputSettings() {
-    return this.inputSettings.join(" ");
-  }
+    GetInputSettings() {
+        return this.inputSettings.join(" ");
+    }
 }
 
 // #endregion
@@ -218,14 +218,14 @@ class Configurator {
 // #region Plugin Methods
 
 function calculateBitrate(file) {
-  var bitrateprobe = file.ffProbeData.streams[0].bit_rate;
-  if (isNaN(bitrateprobe)) {
-    var bitrateprobe = file.ffProbeData.streams[0].tags?.BPS;
+    var bitrateprobe = file.ffProbeData.streams[0].bit_rate;
     if (isNaN(bitrateprobe)) {
-      bitrateprobe = file.bit_rate;
+        var bitrateprobe = file.ffProbeData.streams[0].tags?.BPS;
+        if (isNaN(bitrateprobe)) {
+            bitrateprobe = file.bit_rate;
+        }
     }
-  }
-  return bitrateprobe;
+    return bitrateprobe;
 }
 
 /**
@@ -236,13 +236,13 @@ function calculateBitrate(file) {
  * @param {function} method the method to call.
  */
 function loopOverStreamsOfType(file, type, method) {
-  var id = 0;
-  for (var i = 0; i < file.ffProbeData.streams.length; i++) {
-    if (file.ffProbeData.streams[i].codec_type.toLowerCase() === type) {
-      method(file.ffProbeData.streams[i], id);
-      id++;
+    var id = 0;
+    for (var i = 0; i < file.ffProbeData.streams.length; i++) {
+        if (file.ffProbeData.streams[i].codec_type.toLowerCase() === type) {
+            method(file.ffProbeData.streams[i], id);
+            id++;
+        }
     }
-  }
 }
 
 /**
@@ -250,117 +250,117 @@ function loopOverStreamsOfType(file, type, method) {
  * Transcode audio if specified.
  */
 function buildAudioConfiguration(inputs, file, logger) {
-  var configuration = new Configurator(["-c:a copy"]);
-  var stream_count = 0;
-  var streams_removing = 0;
-  var languages = inputs.audio_language.split(",");
+    var configuration = new Configurator(["-c:a copy"]);
+    var stream_count = 0;
+    var streams_removing = 0;
+    var languages = inputs.audio_language.split(",");
 
-  function audioProcess(stream, id) {
-    stream_count++;
-    if (
-      "tags" in stream &&
-      "title" in stream.tags &&
-      inputs.audio_commentary.toLowerCase() == "true"
-    ) {
-      if (
-        stream.tags.title.toLowerCase().includes("commentary") ||
-        stream.tags.title.toLowerCase().includes("description") ||
-        stream.tags.title.toLowerCase().includes("sdh")
-      ) {
-        streams_removing++;
-        configuration.AddOutputSetting(`-map -0:a:${id}`);
-        logger.AddError(
-          `Removing Commentary or Description audio track: ${stream.tags.title}`
-        );
-      }
-    }
-    if ("tags" in stream) {
-      // Remove unwanted languages
-      if ("language" in stream.tags) {
-        if (languages.indexOf(stream.tags.language.toLowerCase()) === -1) {
-          configuration.AddOutputSetting(`-map -0:a:${id}`);
-          streams_removing++;
-          logger.AddError(
-            `Removing audio track in language ${stream.tags.language}`
-          );
+    function audioProcess(stream, id) {
+        stream_count++;
+        if (
+            "tags" in stream &&
+            "title" in stream.tags &&
+            inputs.audio_commentary.toLowerCase() == "true"
+        ) {
+            if (
+                stream.tags.title.toLowerCase().includes("commentary") ||
+                stream.tags.title.toLowerCase().includes("description") ||
+                stream.tags.title.toLowerCase().includes("sdh")
+            ) {
+                streams_removing++;
+                configuration.AddOutputSetting(`-map -0:a:${id}`);
+                logger.AddError(
+                    `Removing Commentary or Description audio track: ${stream.tags.title}`
+                );
+            }
         }
-      }
+        if ("tags" in stream) {
+            // Remove unwanted languages
+            if ("language" in stream.tags) {
+                if (languages.indexOf(stream.tags.language.toLowerCase()) === -1) {
+                    configuration.AddOutputSetting(`-map -0:a:${id}`);
+                    streams_removing++;
+                    logger.AddError(
+                        `Removing audio track in language ${stream.tags.language}`
+                    );
+                }
+            }
+        }
     }
-  }
 
-  loopOverStreamsOfType(file, "audio", audioProcess);
+    loopOverStreamsOfType(file, "audio", audioProcess);
 
-  if (stream_count == streams_removing) {
-    logger.AddError(
-      `*** All audio tracks would have been removed.  Defaulting to keeping all tracks for this file.`
-    );
-    configuration.ResetOutputSetting(["-c:a copy"]);
-  }
+    if (stream_count == streams_removing) {
+        logger.AddError(
+            `*** All audio tracks would have been removed.  Defaulting to keeping all tracks for this file.`
+        );
+        configuration.ResetOutputSetting(["-c:a copy"]);
+    }
 
-  return configuration;
+    return configuration;
 }
 
 /**
  * Removes subtitles that aren't in the allowed languages or labeled as Commentary tracks.
  */
 function buildSubtitleConfiguration(inputs, file, logger) {
-  var configuration = new Configurator(["-c:s copy"]);
+    var configuration = new Configurator(["-c:s copy"]);
 
-  var languages = inputs.subtitle_language.split(",");
-  if (languages.length === 0) return configuration;
+    var languages = inputs.subtitle_language.split(",");
+    if (languages.length === 0) return configuration;
 
-  loopOverStreamsOfType(file, "subtitle", function (stream, id) {
-    if (stream.codec_name === "eia_608" || stream.codec_tag_string === "mp4s") {
-      // unsupported subtitle codec?
-      configuration.AddOutputSetting(`-map -0:s:${id}`);
-      logger.AddError(`Removing unsupported subtitle`);
-      return;
-    }
-
-    // Remove unknown sub streams
-    if (!("codec_name" in stream)) {
-      configuration.AddOutputSetting(`-map -0:s:${id}`);
-      logger.AddError(`Removing unknown subtitle`);
-      return;
-    }
-
-    if ("tags" in stream) {
-      // Remove unwanted languages
-      if ("language" in stream.tags) {
-        if (languages.indexOf(stream.tags.language.toLowerCase()) === -1) {
-          configuration.AddOutputSetting(`-map -0:s:${id}`);
-          logger.AddError(
-            `Removing subtitle in language ${stream.tags.language}`
-          );
-          return;
+    loopOverStreamsOfType(file, "subtitle", function (stream, id) {
+        if (stream.codec_name === "eia_608" || stream.codec_tag_string === "mp4s") {
+            // unsupported subtitle codec?
+            configuration.AddOutputSetting(`-map -0:s:${id}`);
+            logger.AddError(`Removing unsupported subtitle`);
+            return;
         }
-      }
 
-      // Remove commentary subtitles
-      if (
-        "title" in stream.tags &&
-        inputs.subtitle_commentary.toLowerCase() == "true"
-      ) {
-        if (
-          stream.tags.title.toLowerCase().includes("commentary") ||
-          stream.tags.title.toLowerCase().includes("description") ||
-          stream.tags.title.toLowerCase().includes("sdh")
-        ) {
-          configuration.AddOutputSetting(`-map -0:s:${id}`);
-          logger.AddError(
-            `Removing Commentary or Description subtitle: ${stream.tags.title}`
-          );
-          return;
+        // Remove unknown sub streams
+        if (!("codec_name" in stream)) {
+            configuration.AddOutputSetting(`-map -0:s:${id}`);
+            logger.AddError(`Removing unknown subtitle`);
+            return;
         }
-      }
+
+        if ("tags" in stream) {
+            // Remove unwanted languages
+            if ("language" in stream.tags) {
+                if (languages.indexOf(stream.tags.language.toLowerCase()) === -1) {
+                    configuration.AddOutputSetting(`-map -0:s:${id}`);
+                    logger.AddError(
+                        `Removing subtitle in language ${stream.tags.language}`
+                    );
+                    return;
+                }
+            }
+
+            // Remove commentary subtitles
+            if (
+                "title" in stream.tags &&
+                inputs.subtitle_commentary.toLowerCase() == "true"
+            ) {
+                if (
+                    stream.tags.title.toLowerCase().includes("commentary") ||
+                    stream.tags.title.toLowerCase().includes("description") ||
+                    stream.tags.title.toLowerCase().includes("sdh")
+                ) {
+                    configuration.AddOutputSetting(`-map -0:s:${id}`);
+                    logger.AddError(
+                        `Removing Commentary or Description subtitle: ${stream.tags.title}`
+                    );
+                    return;
+                }
+            }
+        }
+    });
+
+    if (!configuration.shouldProcess) {
+        logger.AddSuccess("No subtitle processing necessary");
     }
-  });
 
-  if (!configuration.shouldProcess) {
-    logger.AddSuccess("No subtitle processing necessary");
-  }
-
-  return configuration;
+    return configuration;
 }
 
 /**
@@ -368,179 +368,179 @@ function buildSubtitleConfiguration(inputs, file, logger) {
  * MKV container.
  */
 function buildVideoConfiguration(inputs, file, logger) {
-  const os = require("os");
-  var configuration = new Configurator(["-map 0", "-map -0:d"]);
+    const os = require("os");
+    var configuration = new Configurator(["-map 0", "-map -0:d"]);
 
-  var tiered = {
-    "480p": {
-      bitrate: inputs.target_bitrate_480p576p,
-      max_increase: 500,
-      cq: 29
-    },
-    "576p": {
-      bitrate: inputs.target_bitrate_480p576p,
-      max_increase: 500,
-      cq: 29
-    },
-    "720p": {
-      bitrate: inputs.target_bitrate_720p,
-      max_increase: 2000,
-      cq: 30
-    },
-    "1080p": {
-      bitrate: inputs.target_bitrate_1080p,
-      max_increase: 2500,
-      cq: 31
-    },
-    "4KUHD": {
-      bitrate: inputs.target_bitrate_4KUHD,
-      max_increase: 6000,
-      cq: 31
-    },
-    Other: {
-      bitrate: inputs.target_bitrate_1080p,
-      max_increase: 2500,
-      cq: 31
+    var tiered = {
+        "480p": {
+            bitrate: inputs.target_bitrate_480p576p,
+            max_increase: 500,
+            cq: 29
+        },
+        "576p": {
+            bitrate: inputs.target_bitrate_480p576p,
+            max_increase: 500,
+            cq: 29
+        },
+        "720p": {
+            bitrate: inputs.target_bitrate_720p,
+            max_increase: 2000,
+            cq: 30
+        },
+        "1080p": {
+            bitrate: inputs.target_bitrate_1080p,
+            max_increase: 2500,
+            cq: 31
+        },
+        "4KUHD": {
+            bitrate: inputs.target_bitrate_4KUHD,
+            max_increase: 6000,
+            cq: 31
+        },
+        Other: {
+            bitrate: inputs.target_bitrate_1080p,
+            max_increase: 2500,
+            cq: 31
+        }
+    };
+
+    var inputSettings = {
+        h264: "",
+        hevc: "-hwaccel qsv -c:v hevc_qsv",
+        mjpeg: "-hwaccel qsv -c:v mjpeg_qsv",
+        mpeg1: "-c:v mpeg1_cuvid",
+        mpeg2: "-hwaccel qsv -c:v mpeg2_qsv",
+        vc1: "-hwaccel qsv -c:v vc1_qsv",
+        vp8: "-hwaccel qsv -c:v vp8_qsv",
+        vp9: "-hwaccel qsv -c:v vp9_qsv" // Should be supported by 8th Gen +
+    };
+
+    function videoProcess(stream, id) {
+        if (stream.codec_name === "mjpeg") {
+            configuration.AddOutputSetting(`-map -v:${id}`);
+            return;
+        }
+        // remove png streams.
+        if (stream.codec_name === "png") {
+            configuration.AddOutputSetting(`-map -0:v:${id}`);
+        } else {
+            // Check if should Transcode.
+            var bitrateprobe = calculateBitrate(file);
+            var bitratetarget = 0;
+            var bitratemax = 0;
+            var cq = 0;
+            var bitratecheck = 0;
+
+            /*  Determine tiered bitrate variables */
+            var tier = tiered[file.video_resolution];
+
+            bitratecheck = parseInt(tier["bitrate"]);
+            if (bitrateprobe !== null && bitrateprobe < bitratecheck) {
+                bitratetarget = parseInt(
+                    (bitrateprobe * inputs.target_pct_reduction) / 1000
+                );
+            } else {
+                bitratetarget = parseInt(tier["bitrate"] / 1000);
+            }
+            bitratemax = bitratetarget + tier["max_increase"];
+            cq = tier["cq"];
+
+            switch (os.platform()) {
+                case "darwin":
+                    configuration.AddOutputSetting("-c:v hevc_videotoolbox");
+                    // hevc_videotoolbox is for Mac but that doesn't seem to be included in Tdarr current Jellyfin FFmpeg
+                    // Likely needs custom FFmpeg installed
+                    break;
+                case "linux":
+                    configuration.AddOutputSetting("-c:v hevc_qsv");
+                    break;
+                case "win32":
+                    configuration.AddOutputSetting("-c:v hevc_qsv -load_plugin hevc_hw");
+                    // Windows needs the additional -load_plugin plugin. Tested working on a Win 10 - i5-10505
+                    break;
+                default:
+                    configuration.AddOutputSetting("-c:v hevc_qsv");
+            }
+
+            configuration.AddOutputSetting(
+                `-qmin 0 -q:v ${cq} -b:v ${bitratetarget}k -maxrate:v ${bitratemax}k -preset medium -rc-lookahead 32 -spatial_aq:v 1 -aq-strength:v 8`
+            );
+
+            if (
+                file.video_codec_name === "h264" &&
+                file.ffProbeData.streams[0].profile !== "High 10"
+            ) {
+                configuration.AddInputSetting("-hwaccel qsv -c:v h264_qsv");
+            } else {
+                // Handles unsupported HW decode Types
+                var decodeType = inputSettings[file.video_codec_name] || "-hwaccel qsv";
+                configuration.AddInputSetting(decodeType);
+            }
+
+            logger.AddError("Transcoding to HEVC using QuickSync");
+        }
     }
-  };
 
-  var inputSettings = {
-    h264: "",
-    hevc: "-hwaccel qsv -c:v hevc_qsv",
-    mjpeg: "-hwaccel qsv -c:v mjpeg_qsv",
-    mpeg1: "-c:v mpeg1_cuvid",
-    mpeg2: "-hwaccel qsv -c:v mpeg2_qsv",
-    vc1: "-hwaccel qsv -c:v vc1_qsv",
-    vp8: "-hwaccel qsv -c:v vp8_qsv",
-    vp9: "-hwaccel qsv -c:v vp9_qsv" // Should be supported by 8th Gen +
-  };
+    loopOverStreamsOfType(file, "video", videoProcess);
 
-  function videoProcess(stream, id) {
-    if (stream.codec_name === "mjpeg") {
-      configuration.AddOutputSetting(`-map -v:${id}`);
-      return;
+    if (!configuration.shouldProcess) {
+        logger.AddSuccess("No video processing necessary");
     }
-    // remove png streams.
-    if (stream.codec_name === "png") {
-      configuration.AddOutputSetting(`-map -0:v:${id}`);
-    } else {
-      // Check if should Transcode.
-      var bitrateprobe = calculateBitrate(file);
-      var bitratetarget = 0;
-      var bitratemax = 0;
-      var cq = 0;
-      var bitratecheck = 0;
 
-      /*  Determine tiered bitrate variables */
-      var tier = tiered[file.video_resolution];
-
-      bitratecheck = parseInt(tier["bitrate"]);
-      if (bitrateprobe !== null && bitrateprobe < bitratecheck) {
-        bitratetarget = parseInt(
-          (bitrateprobe * inputs.target_pct_reduction) / 1000
-        );
-      } else {
-        bitratetarget = parseInt(tier["bitrate"] / 1000);
-      }
-      bitratemax = bitratetarget + tier["max_increase"];
-      cq = tier["cq"];
-
-      switch (os.platform()) {
-        case "darwin":
-          configuration.AddOutputSetting("-c:v hevc_videotoolbox");
-          // hevc_videotoolbox is for Mac but that doesn't seem to be included in Tdarr current Jellyfin FFmpeg
-          // Likely needs custom FFmpeg installed
-          break;
-        case "linux":
-          configuration.AddOutputSetting("-c:v hevc_qsv");
-          break;
-        case "win32":
-          configuration.AddOutputSetting("-c:v hevc_qsv -load_plugin hevc_hw");
-          // Windows needs the additional -load_plugin plugin. Tested working on a Win 10 - i5-10505
-          break;
-        default:
-          configuration.AddOutputSetting("-c:v hevc_qsv");
-      }
-
-      configuration.AddOutputSetting(
-        `-qmin 0 -q:v ${cq} -b:v ${bitratetarget}k -maxrate:v ${bitratemax}k -preset medium -rc-lookahead 32 -spatial_aq:v 1 -aq-strength:v 8`
-      );
-
-      if (
-        file.video_codec_name === "h264" &&
-        file.ffProbeData.streams[0].profile !== "High 10"
-      ) {
-        configuration.AddInputSetting("-hwaccel qsv -c:v h264_qsv");
-      } else {
-        // Handles unsupported HW decode Types
-        var decodeType = inputSettings[file.video_codec_name] || "-hwaccel qsv";
-        configuration.AddInputSetting(decodeType);
-      }
-
-      logger.AddError("Transcoding to HEVC using QuickSync");
-    }
-  }
-
-  loopOverStreamsOfType(file, "video", videoProcess);
-
-  if (!configuration.shouldProcess) {
-    logger.AddSuccess("No video processing necessary");
-  }
-
-  return configuration;
+    return configuration;
 }
 
 //#endregion
 // eslint-disable-next-line no-unused-vars
 const plugin = (file, librarySettings, inputs, otherArguments) => {
-  const lib = require("../methods/lib")();
-  // eslint-disable-next-line no-unused-vars,no-param-reassign
-  inputs = lib.loadDefaultValues(inputs, details);
-  var response = {
-    container: ".mkv",
-    FFmpegMode: true,
-    handBrakeMode: false,
-    infoLog: "",
-    processFile: false,
-    preset: ""
-  };
+    const lib = require("../methods/lib")();
+    // eslint-disable-next-line no-unused-vars,no-param-reassign
+    inputs = lib.loadDefaultValues(inputs, details);
+    var response = {
+        container: ".mkv",
+        FFmpegMode: true,
+        handBrakeMode: false,
+        infoLog: "",
+        processFile: false,
+        preset: ""
+    };
 
-  var logger = new Log();
-  var audioSettings = buildAudioConfiguration(inputs, file, logger);
-  var videoSettings = buildVideoConfiguration(inputs, file, logger);
-  var subtitleSettings = buildSubtitleConfiguration(inputs, file, logger);
+    var logger = new Log();
+    var audioSettings = buildAudioConfiguration(inputs, file, logger);
+    var videoSettings = buildVideoConfiguration(inputs, file, logger);
+    var subtitleSettings = buildSubtitleConfiguration(inputs, file, logger);
 
-  response.preset = `${videoSettings.GetInputSettings()},${videoSettings.GetOutputSettings()}`;
-  response.preset += ` ${audioSettings.GetOutputSettings()}`;
-  response.preset += ` ${subtitleSettings.GetOutputSettings()}`;
-  response.preset += ` -max_muxing_queue_size 9999`;
+    response.preset = `${videoSettings.GetInputSettings()},${videoSettings.GetOutputSettings()}`;
+    response.preset += ` ${audioSettings.GetOutputSettings()}`;
+    response.preset += ` ${subtitleSettings.GetOutputSettings()}`;
+    response.preset += ` -max_muxing_queue_size 9999`;
 
-  // Extra parameters
-  var id = 0;
-  var badTypes = ["mov_text", "eia_608", "timed_id3", "mp4s"];
-  for (var i = 0; i < file.ffProbeData.streams.length; i++) {
-    if (badTypes.includes(file.ffProbeData.streams[i].codec_name)) {
-      response.preset += ` -map -0:${i}`;
+    // Extra parameters
+    var id = 0;
+    var badTypes = ["mov_text", "eia_608", "timed_id3", "mp4s"];
+    for (var i = 0; i < file.ffProbeData.streams.length; i++) {
+        if (badTypes.includes(file.ffProbeData.streams[i].codec_name)) {
+            response.preset += ` -map -0:${i}`;
+        }
+        id++;
     }
-    id++;
-  }
-  // b frames argument
-  response.preset += ` -bf 5`;
+    // b frames argument
+    response.preset += ` -bf 5`;
 
-  // fix probe size errors
-  response.preset += ` -analyzeduration 2147483647 -probesize 2147483647`;
+    // fix probe size errors
+    response.preset += ` -analyzeduration 2147483647 -probesize 2147483647`;
 
-  response.processFile =
-    audioSettings.shouldProcess ||
-    videoSettings.shouldProcess ||
-    subtitleSettings.shouldProcess;
+    response.processFile =
+        audioSettings.shouldProcess ||
+        videoSettings.shouldProcess ||
+        subtitleSettings.shouldProcess;
 
-  if (!response.processFile) {
-    logger.AddSuccess("No need to process file");
-  }
+    if (!response.processFile) {
+        logger.AddSuccess("No need to process file");
+    }
 
-  response.infoLog += logger.GetLogData();
-  return response;
+    response.infoLog += logger.GetLogData();
+    return response;
 };
 
 module.exports.details = details;
