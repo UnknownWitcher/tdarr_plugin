@@ -1,3 +1,4 @@
+/* eslint no-plusplus: ["error", { "allowForLoopAfterthoughts": true }] */
 const details = () => ({
     id: 'Tdarr_Plugin_00uw_filter_by_filename',
     Stage: 'Pre-processing',
@@ -56,9 +57,10 @@ const plugin = (file, librarySettings, inputs, otherArguments) => {
     var filename = otherArguments.originalLibraryFile.file.toLowerCase();
     var filter_tag = inputs.filter_tag.toLowerCase().split(",");
 
-    for(const i in filter_tag) {
-        if(filename.includes(filter_tag[i])){
-            response.infoLog += `Filename matches tag ${filter_tag[i]}`;
+    for (let i = 0; i < filter_tag.length; i++) {
+        let tag = filter_tag[i].trim();
+        if(filename.includes(tag)){
+            response.infoLog += `Filename matches tag ${tag}`;
             if(inputs.filter_skip) {
                 response.infoLog += `, Skipping.\n`;
                 return response;
@@ -69,7 +71,7 @@ const plugin = (file, librarySettings, inputs, otherArguments) => {
         }
     }
     
-    response.infoLog += `Filename does not match tag ${filter_tag[i]}`;
+    response.infoLog += `Filename does not match tag ${tag}`;
 
     if(inputs.filter_skip) {
         response.infoLog += `, Skipping.\n`;
