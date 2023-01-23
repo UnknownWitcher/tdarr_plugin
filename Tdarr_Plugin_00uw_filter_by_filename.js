@@ -26,7 +26,7 @@ const details = () => ({
         AC3 5.1,DTS-HD MA 7.1,AC3 2.0\n`,
     },{
         name: 'filter_skip',
-        type: 'string',
+        type: 'boolean',
         defaultValue: 'true',
         inputUI: {
             type: 'dropdown',
