@@ -53,10 +53,11 @@ const plugin = (file, librarySettings, inputs, otherArguments) => {
         return response;
     }
 
-    var filter_tag = inputs.filter_tag.split(",");
+    var filename = otherArguments.originalLibraryFile.file.toLowerCase();
+    var filter_tag = inputs.filter_tag.toLowerCase().split(",");
 
     for(const i in filter_tag) {
-        if(file.includes(filter_tag[i])){
+        if(filename.includes(filter_tag[i])){
             response.infoLog += `Filename matches tag ${filter_tag[i]}`;
             if(inputs.filter_skip) {
                 response.infoLog += `, Skipping.\n`;
