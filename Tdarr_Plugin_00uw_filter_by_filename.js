@@ -73,7 +73,6 @@ const plugin = (file, librarySettings, inputs, otherArguments) => {
 
     if(inputs.filter_skip) {
         response.infoLog += `, Skipping.\n`;
-        response.processFile = false;
         return response;
     }
     response.infoLog += `, Processing.\n`;
