@@ -130,7 +130,7 @@ const plugin = (file, librarySettings, inputs, otherArguments) => {
     let convert = false;
     let groupByLang = {};
     let audioIdx = 0;
-    let ffmpegInsertCmd = "";
+    let ffmpegInsertCmd = "-map 0:v -c:v copy ";
 
     // Function to fitler audio based on codec or channel
     const filterAudio = function (audio, priority, type) {
@@ -193,7 +193,7 @@ const plugin = (file, librarySettings, inputs, otherArguments) => {
             audioIdx += 1;
         }
     });
-
+    ffmpegInsertCmd+="-map 0:d? -c:d copy -map 0:t? -c:t copy "
     if (convert === true) {
         response.processFile = true;
         response.preset = `,${ffmpegInsertCmd}-max_muxing_queue_size 9999`;
