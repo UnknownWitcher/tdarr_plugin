@@ -193,7 +193,7 @@ const plugin = (file, librarySettings, inputs, otherArguments) => {
             audioIdx += 1;
         }
     });
-    ffmpegInsertCmd+="-map 0:d? -c:d copy -map 0:t? -c:t copy "
+    ffmpegInsertCmd+="-map 0:s? -c:s copy -map 0:d? -c:d copy -map 0:t? -c:t copy "
     if (convert === true) {
         response.processFile = true;
         response.preset = `,${ffmpegInsertCmd}-max_muxing_queue_size 9999`;
